@@ -144,6 +144,15 @@ impl AnvilContext {
     pub fn probe_host() -> Self {
         let mut ctx = Self::empty();
         ctx.capabilities = crate::crypto_probe::probe_crypto();
+        #[cfg(target_arch = "x86_64")]
+        {
+            if crate::simd::x86::detect_avx2() {
+                ctx.capabilities.compute |= crate::register::CAP_AVX2;
+            }
+            if crate::simd::x86::detect_avx_vnni() {
+                ctx.capabilities.compute |= crate::register::CAP_AVX_VNNI;
+            }
+        }
         ctx.dispatch.dot_u8_i8_tile = Some(execute_dot_u8_i8_host);
         let _ = ScalarEngine;
         ctx.recompute_anchor();

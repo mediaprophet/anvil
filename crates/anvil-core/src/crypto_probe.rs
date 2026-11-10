@@ -23,11 +23,13 @@ pub fn probe_crypto() -> CryptoIsolationBits {
 }
 
 #[cfg(target_arch = "x86_64")]
+#[allow(unused_unsafe)]
 fn probe_x86() -> CapabilityRegister {
     use core::arch::x86_64::__cpuid_count;
 
     let mut bits = CapabilityRegister::empty();
-    let leaf1 = __cpuid_count(1, 0);
+    #[allow(unused_unsafe)]
+    let leaf1 = unsafe { __cpuid_count(1, 0) };
     // ECX bit 5 VT-x, bit 25 AES-NI, bit 30 RDRAND
     if leaf1.ecx & (1 << 5) != 0 {
         bits.isolation |= ISO_VTX_EPT;
@@ -39,7 +41,8 @@ fn probe_x86() -> CapabilityRegister {
         bits.entropy |= ENTROPY_RDRAND;
     }
 
-    let leaf7 = __cpuid_count(7, 0);
+    #[allow(unused_unsafe)]
+    let leaf7 = unsafe { __cpuid_count(7, 0) };
     // EBX bit 18 RDSEED, bit 29 SHA
     if leaf7.ebx & (1 << 18) != 0 {
         bits.entropy |= ENTROPY_RDSEED;

@@ -52,9 +52,6 @@ pub unsafe fn execute_dot_u8_i8_host(
 ) -> i32 {
     #[cfg(target_arch = "x86_64")]
     {
-        if x86::detect_avx_vnni() {
-            return unsafe { x86::dot_u8_i8_avx_vnni(u8_ptr, i8_ptr, blocks_32b) };
-        }
         if x86::detect_avx2() {
             return unsafe { x86::dot_u8_i8_avx2(u8_ptr, i8_ptr, blocks_32b) };
         }
