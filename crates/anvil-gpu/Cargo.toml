@@ -1,0 +1,20 @@
+[package]
+name = "anvil-gpu"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "Etalon GPU handshake: adapter report, deviceUUID slots, Naga/WGSL specialization hints"
+
+[features]
+default = ["std"]
+std = ["anvil-core/std"]
+
+[dependencies]
+anvil-core = { workspace = true, features = ["std"] }
+
+[lib]
+path = "src/lib.rs"

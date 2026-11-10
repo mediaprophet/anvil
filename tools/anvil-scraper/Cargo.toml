@@ -1,0 +1,17 @@
+[package]
+name = "anvil-scraper"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "Compile seeded hardware ontology into assets/anvil_ontology.q42"
+
+[[bin]]
+name = "anvil-scraper"
+path = "src/main.rs"
+
+[dependencies]
+anvil-core = { workspace = true, features = ["std"] }

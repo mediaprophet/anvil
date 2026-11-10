@@ -1,0 +1,19 @@
+[package]
+name = "anvil-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "#![no_std] hardware ontology, nquin/.q42 wire, SIMD dispatch, and Sanctuary attestation"
+
+[features]
+default = []
+alloc = []
+std = ["alloc"]
+vault-security = []
+
+[lib]
+path = "src/lib.rs"

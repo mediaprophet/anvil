@@ -1,0 +1,20 @@
+[package]
+name = "anvil-npu"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "NPU / WebNN graph-slot handles for Etalon background tensors"
+
+[features]
+default = ["std"]
+std = ["anvil-core/std"]
+
+[dependencies]
+anvil-core = { workspace = true }
+
+[lib]
+path = "src/lib.rs"

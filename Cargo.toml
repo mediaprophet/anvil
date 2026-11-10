@@ -1,0 +1,21 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/anvil-core",
+    "crates/anvil-gpu",
+    "crates/anvil-npu",
+    "crates/anvil-wasm",
+    "tools/anvil-scraper",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+authors = ["Timothy Charles Holborn <timothy.holborn@gmail.com>"]
+license = "CC-BY-NC-ND-4.0"
+repository = "https://github.com/mediaprophet/anvil"
+publish = false
+
+[workspace.dependencies]
+anvil-core = { path = "crates/anvil-core", default-features = false }

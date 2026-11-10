@@ -1,0 +1,68 @@
+# yaml-ld-q42 hardware capability schema (seeded baselines).
+# Compiled by tools/anvil-scraper into assets/anvil_ontology.q42.
+
+"@context":
+  anvil: "https://dev.civics.au/ns/anvil#"
+  q42: "https://dev.civics.au/ns/q42#"
+  sh: "http://www.w3.org/ns/shacl#"
+
+profiles:
+  - id: anvil:Intel_i9_14900HX_Package
+    cpu:
+      vendor_id: 0x8086
+      device_id: 0xB067
+      arch_stepping: 0x00000C02
+      p_cores: 8
+      e_cores: 16
+      simd: [AVX2, AVX-VNNI]
+      tdp_watts: [55, 157]
+    igpu:
+      vendor_id: 0x8086
+      device_id: 0xA788
+      eu_count: 32
+      clock_mhz: 1650
+      workgroup_size: 64
+      dp4a: true
+      hw_ray_tracing: false
+      memory_route: UnifiedZeroCopyHost
+      media_engines: 2
+    npu: Intel_GNA_3_0
+
+  - id: anvil:Workstation_AVX2_RTX_A2000
+    dgpu:
+      vendor_id: 0x10DE
+      device_id: 0x2531
+      sm_count: 26
+      workgroup_size: 256
+      dp4a: true
+      coop_matrix: true
+      hw_ray_tracing: true
+      memory_route: DiscretePcieDma
+
+  - id: anvil:Mobile_AVX2_UHD620
+    igpu:
+      vendor_id: 0x8086
+      device_id: 0x5917
+      eu_count: 24
+      workgroup_size: 64
+      memory_route: UnifiedZeroCopyHost
+
+  - id: anvil:Apple_Silicon_Unified
+    gpu:
+      vendor_id: 0x106B
+      device_id: 0x0001
+      workgroup_size: 256
+      simd: [NEON_DOTPROD, ARM_I8MM]
+      memory_route: UnifiedZeroCopyHost
+    npu: Apple_Neural_Engine
+    tier0_slot: Apple_Secure_Enclave
+
+  - id: anvil:Arm64_Mobile_Tensor
+    gpu:
+      vendor_id: 0x13B5
+      device_id: 0x0001
+      workgroup_size: 64
+      dp4a: true
+      memory_route: UnifiedZeroCopyHost
+    npu: Google_Tensor_TPU
+    tier0_slot: Titan_M2_StrongBox
