@@ -13,15 +13,20 @@ extern crate std;
 
 pub mod calibrate;
 pub mod crypto_probe;
+#[cfg(feature = "std")]
+pub mod host_probe;
 pub mod id_fabric;
 pub mod ir;
+pub mod node_profile;
 pub mod ontology;
 pub mod q42_wire;
 pub mod register;
 pub mod simd;
 
 pub use calibrate::{calibrate_cpu_tile, CalibrationSample};
-pub use crypto_probe::{probe_crypto, CryptoIsolationBits};
+pub use crypto_probe::{probe_cpu_vendor_stepping, probe_crypto, CryptoIsolationBits};
+#[cfg(feature = "std")]
+pub use host_probe::probe_live_profile;
 pub use id_fabric::{
     verify_sanctuary_policy, AnvilContext, AttestationTier, IdentifierRecord, SanctuaryPolicy,
 };
@@ -30,6 +35,11 @@ pub use ir::{
     POLICY_ZERO_COPY,
 };
 pub use ontology::{lookup, seeded_ontology, BASELINE_COUNT};
+pub use node_profile::{
+    AdvertisingDeny, NodeProfile64, NodeProfileError, NODE_PROFILE_BYTES, NODE_PROFILE_MAGIC,
+    NODE_PROFILE_VERSION, PROFILE_HAS_GPU_UUID, PROFILE_HAS_IOMMU, PROFILE_HAS_VTX,
+    PROFILE_PCI_IS_GPU, PROFILE_SANCTUARY_HW_READY,
+};
 pub use q42_wire::{
     fnv1a64, write_superblock, AnvilNquin, Q42Header, Q42ParseError, Q42_FLAG_MACHINE_STATE,
     Q42_FLAG_ONTOLOGY, Q42_FLAG_SANCTUARY, Q42_HEADER_BYTES, Q42_MAGIC, Q42_SCHEMA_VERSION,

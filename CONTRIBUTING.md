@@ -8,8 +8,8 @@ Etalon. Do not fold it into QualiaDB.
 - QualiaDB owns CPU nquin sieves, the `.q42` graph, vault crypto, and
   **manages** the human-centric identifier fabric (did:q42, Sanctuary Mode,
   Human Agency, Personal Autonomy).
-- Anvil publishes hardware facts: ontology SuperBlock, GPU/NPU routing,
-  Naga/WGSL hints, memory routes, and identifier **slots**.
+- Anvil publishes hardware facts: ontology SuperBlock, live [`NodeProfile64`](docs/NODE-PROFILE.md),
+  GPU/NPU routing, Naga/WGSL hints, memory routes, and identifier **slots**.
 - Etalon consumes `anvil-core` + `anvil-gpu` for shaders and `deviceUUID`.
 
 ## Guardrails

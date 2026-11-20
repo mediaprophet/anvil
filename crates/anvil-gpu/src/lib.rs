@@ -9,5 +9,5 @@
 pub mod adapter_probe;
 pub mod specializer;
 
-pub use adapter_probe::{etalon_bind_gpu, AdapterReport};
+pub use adapter_probe::{bind_gpu_into_profile, etalon_bind_gpu, AdapterReport};
 pub use specializer::{hints_for_pci, SpecializerHints};

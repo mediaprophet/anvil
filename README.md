@@ -27,7 +27,7 @@ Etalon**.
 - `anvil-gpu` — adapter report + Naga/WGSL specialization hints for Etalon
 - `anvil-npu` — graph-slot handles for NPU / WebNN
 - `anvil-wasm` — browser bootstrap types (relaxed-simd, WebGPU, WebNN)
-- `tools/anvil-scraper` — compiles `schemas/hardware_ontology.yaml` into `assets/anvil_ontology.q42`
+- `tools/anvil-scraper` — compiles `schemas/hardware_ontology.yaml` into `assets/anvil_ontology.q42`; `probe` writes a live [`NodeProfile64`](docs/NODE-PROFILE.md) (`assets/anvil_node_profile.np64`)
 
 ## Guardrails
 
@@ -35,6 +35,7 @@ Etalon**.
 - Human-rights language: Human Agency, Personal Autonomy, Sanctuary Mode
 - "Identity" only for enumerated cryptography-supported identifiers
 - Tests use generic placeholders (`0x55`, `0xAA`, `Device_001`, `Node_Alpha`)
+- Live host facts are [`NodeProfile64`](docs/NODE-PROFILE.md) (64 bytes, magic `NP64`). Seeded ontology and live profile are separate files. Do not advertise a hardware-attested vault until Qualia reads the profile (N2), Etalon binds `deviceUUID` (N3), and N4’s advertising gate is true on that box. N3 writes the UUID into the existing profile; it does not invent a profile from GPU facts alone.
 
 ## Consumers
 
@@ -46,3 +47,12 @@ anvil-gpu  = { git = "https://github.com/mediaprophet/anvil" }
 # QualiaDB (identifier-fabric facts; Sanctuary policy stays in QualiaDB)
 anvil-core = { git = "https://github.com/mediaprophet/anvil", default-features = false, features = ["vault-security"] }
 ```
+
+## Scraper
+
+```text
+cargo run -p anvil-scraper -- ontology
+cargo run -p anvil-scraper -- probe
+```
+
+`ontology` writes the five seeded SKUs. `probe` writes a live NodeProfile64 for this box. Layout: [`docs/NODE-PROFILE.md`](docs/NODE-PROFILE.md).

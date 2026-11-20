@@ -4,6 +4,8 @@ const LIB: &str = include_str!("../src/lib.rs");
 const ID: &str = include_str!("../src/id_fabric.rs");
 const IR: &str = include_str!("../src/ir.rs");
 const CAL: &str = include_str!("../src/calibrate.rs");
+const NP: &str = include_str!("../src/node_profile.rs");
+const HP: &str = include_str!("../src/host_probe.rs");
 
 fn forbidden(hay: &str) {
     let lower = hay.to_ascii_lowercase();
@@ -13,7 +15,7 @@ fn forbidden(hay: &str) {
 
 #[test]
 fn core_sources_keep_guardrails() {
-    for src in [LIB, ID, IR, CAL] {
+    for src in [LIB, ID, IR, CAL, NP, HP] {
         forbidden(src);
     }
     assert!(CAL.contains("0x55"));
@@ -27,4 +29,6 @@ fn identifier_word_is_enumerated_only() {
     // "identity" is reserved; this module talks about identifier slots.
     assert!(!lower.contains("identity"));
     assert!(lower.contains("identifier"));
+    let np = NP.to_ascii_lowercase();
+    assert!(!np.contains("identity"));
 }

@@ -186,7 +186,7 @@ impl AnvilContext {
         self.sanctuary_verified = verify_sanctuary_policy(self, SanctuaryPolicy::hardware_isolated());
     }
 
-    fn recompute_anchor(&mut self) {
+    pub(crate) fn recompute_anchor(&mut self) {
         let mut nquin = [0u8; 48];
         nquin[8] = self.attestation_tier as u8;
         nquin[9] = u8::from(self.has_gpu_uuid);

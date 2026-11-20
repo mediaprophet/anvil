@@ -1,4 +1,7 @@
 /target
+/target-n3
 **/*.rs.bk
 .cargo/
 .grok/
+assets/anvil_node_profile.np64
+assets/*.np64

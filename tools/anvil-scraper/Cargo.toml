@@ -7,7 +7,7 @@ authors.workspace = true
 license.workspace = true
 repository.workspace = true
 publish = false
-description = "Compile seeded hardware ontology into assets/anvil_ontology.q42"
+description = "Compile seeded hardware ontology and probe a live NodeProfile64"
 
 [[bin]]
 name = "anvil-scraper"

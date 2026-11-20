@@ -13,6 +13,8 @@ description = "#![no_std] hardware ontology, nquin/.q42 wire, SIMD dispatch, and
 default = []
 alloc = []
 std = ["alloc"]
+# Policy tag for QualiaDB Sanctuary consumers. NodeProfile64 parse is always
+# available; this feature records that the consumer applies vault fail-closed.
 vault-security = []
 
 [lib]

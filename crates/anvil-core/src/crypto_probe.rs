@@ -11,6 +11,37 @@ use crate::register::{
 /// Crypto / entropy / isolation bitmask triple returned by [`probe_crypto`].
 pub type CryptoIsolationBits = CapabilityRegister;
 
+/// PCI-style vendor id for the CPU vendor string, plus CPUID leaf-1 EAX.
+/// `(0, 0)` on non-x86_64.
+pub fn probe_cpu_vendor_stepping() -> (u16, u32) {
+    #[cfg(target_arch = "x86_64")]
+    {
+        probe_cpu_vendor_stepping_x86()
+    }
+    #[cfg(not(target_arch = "x86_64"))]
+    {
+        (0, 0)
+    }
+}
+
+#[cfg(target_arch = "x86_64")]
+#[allow(unused_unsafe)]
+fn probe_cpu_vendor_stepping_x86() -> (u16, u32) {
+    use core::arch::x86_64::__cpuid_count;
+    let leaf0 = unsafe { __cpuid_count(0, 0) };
+    let mut brand = [0u8; 12];
+    brand[0..4].copy_from_slice(&leaf0.ebx.to_le_bytes());
+    brand[4..8].copy_from_slice(&leaf0.edx.to_le_bytes());
+    brand[8..12].copy_from_slice(&leaf0.ecx.to_le_bytes());
+    let vendor = match &brand {
+        b"GenuineIntel" => 0x8086,
+        b"AuthenticAMD" => 0x1022,
+        _ => 0,
+    };
+    let leaf1 = unsafe { __cpuid_count(1, 0) };
+    (vendor, leaf1.eax)
+}
+
 pub fn probe_crypto() -> CryptoIsolationBits {
     #[cfg(target_arch = "x86_64")]
     {
