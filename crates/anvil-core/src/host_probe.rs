@@ -188,7 +188,7 @@ fn wchar_ascii(w: &[u16]) -> std::string::String {
 fn linux_display_pci() -> Option<(u16, u16)> {
     use std::fs;
     let dir = fs::read_dir("/sys/bus/pci/devices").ok()?;
-    let mut best: Option<(u16, u16, i32, u32)> = None;
+    let mut best: Option<(u16, u16, i32)> = None;
     for ent in dir.flatten() {
         let path = ent.path();
         let class_s = fs::read_to_string(path.join("class")).ok()?;
@@ -206,11 +206,11 @@ fn linux_display_pci() -> Option<(u16, u16)> {
         }
         let rank = pci_rank(ven);
         match best {
-            Some((_, _, r, _)) if r <= rank => {}
-            _ => best = Some((ven, dev, rank, class)),
+            Some((_, _, r)) if r <= rank => {}
+            _ => best = Some((ven, dev, rank)),
         }
     }
-    best.map(|(v, d, _, _)| (v, d))
+    best.map(|(v, d, _)| (v, d))
 }
 
 #[cfg(test)]
