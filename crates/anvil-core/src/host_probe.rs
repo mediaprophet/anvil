@@ -191,16 +191,28 @@ fn linux_display_pci() -> Option<(u16, u16)> {
     let mut best: Option<(u16, u16, i32)> = None;
     for ent in dir.flatten() {
         let path = ent.path();
-        let class_s = fs::read_to_string(path.join("class")).ok()?;
-        let class = u32::from_str_radix(class_s.trim().trim_start_matches("0x"), 16).ok()?;
+        let Ok(class_s) = fs::read_to_string(path.join("class")) else {
+            continue;
+        };
+        let Ok(class) = u32::from_str_radix(class_s.trim().trim_start_matches("0x"), 16) else {
+            continue;
+        };
         let class_base = class >> 16;
         if class_base != 0x03 {
             continue;
         }
-        let ven_s = fs::read_to_string(path.join("vendor")).ok()?;
-        let dev_s = fs::read_to_string(path.join("device")).ok()?;
-        let ven = u16::from_str_radix(ven_s.trim().trim_start_matches("0x"), 16).ok()?;
-        let dev = u16::from_str_radix(dev_s.trim().trim_start_matches("0x"), 16).ok()?;
+        let Ok(ven_s) = fs::read_to_string(path.join("vendor")) else {
+            continue;
+        };
+        let Ok(dev_s) = fs::read_to_string(path.join("device")) else {
+            continue;
+        };
+        let Ok(ven) = u16::from_str_radix(ven_s.trim().trim_start_matches("0x"), 16) else {
+            continue;
+        };
+        let Ok(dev) = u16::from_str_radix(dev_s.trim().trim_start_matches("0x"), 16) else {
+            continue;
+        };
         if ven == 0x1414 {
             continue;
         }
