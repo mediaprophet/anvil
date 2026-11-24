@@ -158,6 +158,7 @@ fn pci_rank(vendor: u16) -> i32 {
     }
 }
 
+#[cfg(any(windows, test))]
 fn parse_pci_ven_dev(id: &str) -> Option<(u16, u16)> {
     let upper = id.to_ascii_uppercase();
     let ven = find_hex_after(&upper, "VEN_")?;
@@ -165,6 +166,7 @@ fn parse_pci_ven_dev(id: &str) -> Option<(u16, u16)> {
     Some((ven, dev))
 }
 
+#[cfg(any(windows, test))]
 fn find_hex_after(hay: &str, key: &str) -> Option<u16> {
     let i = hay.find(key)?;
     let rest = hay.get(i + key.len()..)?;
